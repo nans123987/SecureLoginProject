@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="securelogindbModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_roles">
+          <Key>
+            <PropertyRef Name="Role_id" />
+          </Key>
+          <Property Name="Role_id" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Role_desc" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_userinfo">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="DOB" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="LockedStatus" Type="bool" Nullable="false" />
+          <Property Name="Role_id" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="PwdHashSalt" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="roles_foreignKey">
+          <End Role="tbl_roles" Type="Self.tbl_roles" Multiplicity="1" />
+          <End Role="tbl_userinfo" Type="Self.tbl_userinfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_roles">
+              <PropertyRef Name="Role_id" />
+            </Principal>
+            <Dependent Role="tbl_userinfo">
+              <PropertyRef Name="Role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="securelogindbModelStoreContainer">
+          <EntitySet Name="tbl_roles" EntityType="Self.tbl_roles" Schema="securelogindb" store:Type="Tables" />
+          <EntitySet Name="tbl_userinfo" EntityType="Self.tbl_userinfo" Schema="securelogindb" store:Type="Tables" />
+          <AssociationSet Name="roles_foreignKey" Association="Self.roles_foreignKey">
+            <End Role="tbl_roles" EntitySet="tbl_roles" />
+            <End Role="tbl_userinfo" EntitySet="tbl_userinfo" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="securelogindbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbl_roles">
+          <Key>
+            <PropertyRef Name="Role_id" />
+          </Key>
+          <Property Name="Role_id" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Role_desc" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tbl_userinfo" Relationship="Self.roles_foreignKey" FromRole="tbl_roles" ToRole="tbl_userinfo" />
+        </EntityType>
+        <EntityType Name="tbl_userinfo">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DOB" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LockedStatus" Type="Boolean" Nullable="false" />
+          <Property Name="Role_id" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PwdHashSalt" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tbl_roles" Relationship="Self.roles_foreignKey" FromRole="tbl_userinfo" ToRole="tbl_roles" />
+        </EntityType>
+        <Association Name="roles_foreignKey">
+          <End Role="tbl_roles" Type="Self.tbl_roles" Multiplicity="1" />
+          <End Role="tbl_userinfo" Type="Self.tbl_userinfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_roles">
+              <PropertyRef Name="Role_id" />
+            </Principal>
+            <Dependent Role="tbl_userinfo">
+              <PropertyRef Name="Role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SecureLoginDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_roles" EntityType="Self.tbl_roles" />
+          <EntitySet Name="tbl_userinfo" EntityType="Self.tbl_userinfo" />
+          <AssociationSet Name="roles_foreignKey" Association="Self.roles_foreignKey">
+            <End Role="tbl_roles" EntitySet="tbl_roles" />
+            <End Role="tbl_userinfo" EntitySet="tbl_userinfo" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="securelogindbModelStoreContainer" CdmEntityContainer="SecureLoginDBEntities">
+          <EntitySetMapping Name="tbl_roles">
+            <EntityTypeMapping TypeName="securelogindbModel.tbl_roles">
+              <MappingFragment StoreEntitySet="tbl_roles">
+                <ScalarProperty Name="Role_id" ColumnName="Role_id" />
+                <ScalarProperty Name="Role_desc" ColumnName="Role_desc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_userinfo">
+            <EntityTypeMapping TypeName="securelogindbModel.tbl_userinfo">
+              <MappingFragment StoreEntitySet="tbl_userinfo">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="LockedStatus" ColumnName="LockedStatus" />
+                <ScalarProperty Name="Role_id" ColumnName="Role_id" />
+                <ScalarProperty Name="PwdHashSalt" ColumnName="PwdHashSalt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

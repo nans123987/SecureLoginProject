@@ -1,0 +1,102 @@
+﻿@model SecureLoginWebApp.Models.LoginModel
+@{
+    ViewBag.Title = "Login";
+
+}
+
+<div class="top-content">
+    <div class="inner-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3 form-box">
+                    <div class="form-top">
+                        <div class="form-top">
+                            <h2>SECURE LOGIN</h2>
+                            <p>Enter your username and password to log on:</p>
+                        </div>
+                    </div>
+                    <div class="form-bottom">
+
+                        @using (Html.BeginForm("LoginUser", "Login", FormMethod.Post, new { @class = "login-form" }))
+                        {
+                            @Html.AntiForgeryToken()          // this is for prevent CSRF attack
+                            @Html.ValidationSummary(true)
+
+                            <div class="alert" id="alertBox">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <span id="msgSpan" class=@SecureLoginWebApp.Models.LoginModel.viewMessage>@SecureLoginWebApp.Models.LoginModel.viewMessage</span>
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="txtUsername">Username</label>
+                                @Html.TextBoxFor(x => x.login_username, new { @class = "form-username form-control", @placeholder = "Username..." })
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="txtPassword">Password</label>
+                                @Html.TextBoxFor(x => x.login_password, new { @class = "form-password form-control", @placeholder = "Password...", @type = "password" })
+                            </div>
+                            <button type="submit" class="btn btn-success btn-lg btn-block"><span class="glyphicon glyphicon-log-in"></span> Sign In</button>
+                        }
+                        <div style="padding-top:20px">
+                            <button type="button" id="btnRegister" class="btn btn-primary btn-lg btn-block" data-toggle="modal"><span class="glyphicon glyphicon-edit"></span>New User</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+        var message = ' @SecureLoginWebApp.Models.LoginModel.viewMessage ';
+        var trimedMsg = $.trim(message);
+        if (trimedMsg == "") {
+            $('#alertBox').hide();
+        }
+        else if (trimedMsg == "Logged out Successfully" || trimedMsg == "Account Created Successfully") {
+            $('#alertBox').removeClass("alert-danger").addClass("alert-info");
+            $('#alertBox').show();
+            
+        }
+        else if (trimedMsg == "Your Session Has been Expired" || trimedMsg == "Your Account has been Locked!" || trimedMsg == "Username or Password Doesnt match our records") {
+            $('#alertBox').removeClass("alert-info").addClass("alert-danger");
+            $('#alertBox').show();
+            
+        }
+
+        
+        $('#btnRegister').on('click', function () {
+            $.ajax({
+                url: '/Login/Register',
+                type: 'POST',
+                success: function (data) {
+                    $('.modal-body').html(data);
+                    $('#btnRegister').attr('data-target', '#myModal');
+
+                },
+                error: function () {
+
+                }
+
+
+            });
+        });
+
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

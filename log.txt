@@ -1,0 +1,12 @@
+2016-05-12 19:47:47,461 DEBUG SecureLoginWebApp.Controllers.LoginController - User account registration activity intitiated
+2016-05-12 19:47:53,697 DEBUG SecureLoginWebApp.Controllers.LoginController - User Account Registration completed
+2016-05-12 19:47:59,650 DEBUG SecureLoginWebApp.Controllers.LoginController - User trying to login to Service
+2016-05-12 19:47:59,837 DEBUG SecureLoginWebApp.Controllers.LoginController - User Logged In Succesfully to the Login Service
+2016-05-12 19:47:59,845 DEBUG SecureLoginWebApp.Controllers.LoginController - User logged In! Redirecting to Homepage/Dashboard
+2016-05-12 19:48:03,476 DEBUG SecureLoginWebApp.Controllers.LoginController - User Logout Activity initiated
+2016-05-12 19:48:10,868 DEBUG SecureLoginWebApp.Controllers.LoginController - User trying to login to Service
+2016-05-12 19:48:11,225 ERROR SecureLoginWebApp.Controllers.LoginController - Usernames or Password records not found in the User Repository
+2016-05-12 19:48:14,069 DEBUG SecureLoginWebApp.Controllers.LoginController - User trying to login to Service
+2016-05-12 19:48:14,237 ERROR SecureLoginWebApp.Controllers.LoginController - Username Provided was not disocvered in the database for password Checks
+2016-05-12 19:48:20,825 DEBUG SecureLoginWebApp.Controllers.LoginController - User trying to login to Service
+2016-05-12 19:48:20,977 FATAL SecureLoginWebApp.Controllers.LoginController - User account locked due to unsuccessfull login attempts for three times
